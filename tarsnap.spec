@@ -29,9 +29,9 @@ make %{?_smp_mflags}
 %make_install
 %__mv $RPM_BUILD_ROOT/etc/tarsnap.conf.sample $RPM_BUILD_ROOT/etc/tarsnap.conf
 %__sed -i'' \
-  -e 's=^cachedir .*=cachedir /var/cache/tarsnap=g' \
+  -e 's=^cachedir .*=cachedir %{_localstatedir}/cache/%{name}=g' \
   -e 's=^keyfile .*=keyfile /etc/tarsnap.key=g' $RPM_BUILD_ROOT/etc/tarsnap.conf
-%__mkdir_p $RPM_BUILD_ROOT/var/cache/tarsnap
+%__mkdir_p $RPM_BUILD_ROOT/%{_localstatedir}/cache/%{name}
 
 %files
 %defattr(-,root,root)
