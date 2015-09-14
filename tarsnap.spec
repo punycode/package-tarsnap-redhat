@@ -1,6 +1,6 @@
 Summary:            Online backups for the truly paranoid
 Name:               tarsnap
-Version:            1.0.35
+Version:            1.0.36.1
 Release:            1%{?dist}
 License:            AS-IS
 Group:              Applications/Archiving
