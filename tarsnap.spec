@@ -22,15 +22,15 @@ At the present time, Tarsnap does not support Windows (except via Cygwin) and do
 %autosetup -n %{name}-autoconf-%{version}
 
 %build
-%configure
+%configure --with-bash-completion-dir=%{_sysconfdir}/bash_completion.d
 make %{?_smp_mflags}
 
 %install
 %make_install
-%__mv $RPM_BUILD_ROOT/etc/tarsnap.conf.sample $RPM_BUILD_ROOT/etc/tarsnap.conf
+%__mv $RPM_BUILD_ROOT/%{_sysconfdir}/tarsnap.conf.sample $RPM_BUILD_ROOT/%{_sysconfdir}/tarsnap.conf
 %__sed -i'' \
   -e 's=^cachedir .*=cachedir %{_localstatedir}/cache/%{name}=g' \
-  -e 's=^keyfile .*=keyfile /etc/tarsnap.key=g' $RPM_BUILD_ROOT/etc/tarsnap.conf
+  -e 's=^keyfile .*=keyfile %{_sysconfdir}/tarsnap.key=g' $RPM_BUILD_ROOT/%{_sysconfdir}/tarsnap.conf
 %__mkdir_p $RPM_BUILD_ROOT/%{_localstatedir}/cache/%{name}
 
 %files
@@ -39,5 +39,6 @@ make %{?_smp_mflags}
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_mandir}/man5/*
-%attr(0600,root,root) %config(noreplace) /etc/tarsnap.conf
+%config %{_sysconfdir}/bash_completion.d/*
+%attr(0600,root,root) %config(noreplace) %{_sysconfdir}/tarsnap.conf
 %attr(0700,root,root) %dir %{_localstatedir}/cache/%{name}
